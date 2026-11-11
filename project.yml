@@ -1,0 +1,123 @@
+name: Reason
+options:
+  bundleIdPrefix: me.josuerhea
+  deploymentTarget:
+    iOS: "18.0"
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    DEVELOPMENT_TEAM: N398X35HTY
+targets:
+  Reason:
+    type: application
+    platform: iOS
+    sources: [Reason]
+    dependencies:
+      - target: ReasonShare
+        embed: true
+      - target: ReasonNotify
+        embed: true
+    entitlements:
+      path: Reason/Reason.entitlements
+      properties:
+        com.apple.security.application-groups: [group.me.josuerhea.ReasonClient]
+        aps-environment: development
+        com.apple.developer.usernotifications.communication: true
+        com.apple.developer.usernotifications.time-sensitive: true
+    info:
+      path: Reason/Resources/Info.plist
+      properties:
+        CFBundleDisplayName: Reason
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        ITSAppUsesNonExemptEncryption: false
+        NSMicrophoneUsageDescription: Reason uses the microphone to turn what you say into a message.
+        NSCameraUsageDescription: Reason uses the camera to attach photos and videos to a message.
+        NSPhotoLibraryUsageDescription: Reason attaches the photos and videos you pick to your message.
+        NSUserActivityTypes: [INSendMessageIntent]
+        UILaunchScreen:
+          UIColorName: LaunchBackground
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+          UISceneConfigurations:
+            UIWindowSceneSessionRoleApplication:
+              - UISceneConfigurationName: Default
+                UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UISupportedInterfaceOrientations~ipad: [UIInterfaceOrientationPortrait, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight, UIInterfaceOrientationPortraitUpsideDown]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: me.josuerhea.ReasonClient
+        TARGETED_DEVICE_FAMILY: "1,2"
+        CODE_SIGN_STYLE: Automatic
+        ENABLE_PREVIEWS: NO
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+
+  ReasonShare:
+    type: app-extension
+    platform: iOS
+    sources:
+      - ShareExtension
+      - Reason/Core/Models.swift
+      - Reason/Core/ReasonAPI.swift
+      - Reason/Core/Keychain.swift
+      - Reason/Core/Theme.swift
+      - Reason/Core/Attachments.swift
+      - Reason/Core/Markdown.swift
+      - Reason/Core/MarkdownDoc.swift
+      - Reason/UI/AvatarView.swift
+      - Reason/UI/AttachmentViews.swift
+    entitlements:
+      path: ShareExtension/ShareExtension.entitlements
+      properties:
+        com.apple.security.application-groups: [group.me.josuerhea.ReasonClient]
+    info:
+      path: ShareExtension/Info.plist
+      properties:
+        CFBundleDisplayName: Reason
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.share-services
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).ShareViewController
+          NSExtensionAttributes:
+            NSExtensionActivationRule:
+              NSExtensionActivationSupportsAttachmentsWithMaxCount: 10
+              NSExtensionActivationSupportsFileWithMaxCount: 10
+              NSExtensionActivationSupportsImageWithMaxCount: 10
+              NSExtensionActivationSupportsMovieWithMaxCount: 10
+              NSExtensionActivationSupportsText: true
+              NSExtensionActivationSupportsWebURLWithMaxCount: 1
+              NSExtensionActivationSupportsWebPageWithMaxCount: 1
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: me.josuerhea.ReasonClient.Share
+        TARGETED_DEVICE_FAMILY: "1,2"
+        CODE_SIGN_STYLE: Automatic
+        APPLICATION_EXTENSION_API_ONLY: YES
+        ENABLE_PREVIEWS: NO
+
+  ReasonNotify:
+    type: app-extension
+    platform: iOS
+    sources:
+      - NotifyExtension
+      - Reason/Core/Models.swift
+      - Reason/Core/Theme.swift
+      - Reason/UI/AvatarView.swift
+    info:
+      path: NotifyExtension/Info.plist
+      properties:
+        CFBundleDisplayName: Reason
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.usernotifications.service
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).NotificationService
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: me.josuerhea.ReasonClient.Notify
+        TARGETED_DEVICE_FAMILY: "1,2"
+        CODE_SIGN_STYLE: Automatic
+        APPLICATION_EXTENSION_API_ONLY: YES
+        ENABLE_PREVIEWS: NO

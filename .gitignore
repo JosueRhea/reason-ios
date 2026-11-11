@@ -1,0 +1,9 @@
+*.xcodeproj/
+build/
+build-device/
+build-sim/
+DerivedData/
+.DS_Store
+xcuserdata/
+relay/.wrangler/
+node_modules/

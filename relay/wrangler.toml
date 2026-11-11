@@ -1,0 +1,14 @@
+name = "reason-push"
+main = "src/index.js"
+compatibility_date = "2025-09-01"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "0a7eb17be2cc43d4bd2b3858d07643c4"
+
+[vars]
+APNS_TEAM = "N398X35HTY"
+APNS_KEY_ID = "3MB4542685"
+APNS_TOPIC = "me.josuerhea.ReasonClient"
+
+# Secret (wrangler secret put APNS_KEY): the .p8 contents.
